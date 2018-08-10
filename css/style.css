@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'calc';
+  src: url("digital.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: lighter;
+  background: #333;
+  background: -webkit-linear-gradient(legacy-direction(180deg), #333, #111);
+  background: linear-gradient(180deg, #333, #111); }
+
+#app {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  color: #fff;
+  background: #404654;
+  background: -webkit-linear-gradient(legacy-direction(135deg), #404654, #424856);
+  background: linear-gradient(135deg, #404654, #424856);
+  border-radius: 5px; }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  width: 100%;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 0.9em;
+  color: #fff;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease; }
+
+select:hover {
+  color: #dab368; }
+
+input {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  color: #fff;
+  margin: 0px auto;
+  padding: 10px 15px;
+  font-size: 0.9em;
+  border: 1px solid #fff;
+  border-radius: 5px; }
+
+input:focus {
+  color: #dab368;
+  border: 1px solid #dab368; }
+
+.input-field {
+  position: relative;
+  display: block;
+  width: 80%;
+  margin: 5px auto;
+  text-align: left; }
+  .input-field label {
+    font-size: 0.9em;
+    width: 66%;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle; }
+  .input-field input {
+    width: 33%;
+    margin-left: 1%; }
+
+.dial-input-container {
+  position: relative;
+  display: block;
+  width: 80%;
+  margin: 5px auto;
+  text-align: center; }
+  .dial-input-container span {
+    font-size: 0.9em;
+    position: relative;
+    display: block;
+    text-align: left;
+    width: 100%; }
+  .dial-input-container div {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 24%; }
+  .dial-input-container label {
+    position: relative;
+    display: block;
+    font-size: 0.7em; }
+  .dial-input-container select::-ms-expand {
+    display: none; }
+  .dial-input-container .select {
+    width: 80%;
+    border: 1px solid #fff;
+    border-radius: 5px; }
+  .dial-input-container .select:after {
+    content: '\25BC';
+    position: absolute;
+    top: 4px;
+    right: 0;
+    bottom: 0;
+    padding: 0 5px;
+    background: transparent;
+    pointer-events: none;
+    color: #fff;
+    font-size: 0.75em; }
+  .dial-input-container .select:hover::after {
+    color: #dab368; }
+  .dial-input-container .select:after {
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease; }
+
+.errMsg {
+  font-size: 0.6em;
+  color: #f00; }
+
+.turnspro-container {
+  width: 80%;
+  margin: 15px auto; }
+  .turnspro-container span {
+    font-size: 0.9em; }
+
+.turnsproDisplay {
+  width: auto;
+  margin: 5px auto;
+  padding: 5px 10px 10px;
+  color: #000;
+  background: #5080ff;
+  text-align: center;
+  border-radius: 5px; }
+  .turnsproDisplay div {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+    padding: 0px 5px; }
+  .turnsproDisplay label {
+    font-size: 0.7em; }
+  .turnsproDisplay span {
+    font-family: 'calc', sans-serif;
+    font-size: 3em;
+    letter-spacing: 2px;
+    line-height: 1em; }
+
+/*# sourceMappingURL=style.css.map */

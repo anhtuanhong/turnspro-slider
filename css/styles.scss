@@ -1,0 +1,264 @@
+@font-face {
+  font-family: 'calc';
+  src: url('digital.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$background-color: #404654;
+$background-color-light: #424856;
+$text-color: #fff;
+$grey-color: #ccc;
+$error-color: #f00;
+$input-background: #ddd;
+$highlight-color: #dab368;
+$input-font-size: 0.9em;
+$turnspro-bg: #5080ff;
+$turnspro-color: #000;
+
+
+@mixin font() {
+	font-family: 'Roboto', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: lighter;
+}
+
+@mixin turnspro-font() {
+	font-family: 'calc', sans-serif;
+	font-size: 3em;
+	letter-spacing: 2px;
+	line-height: 1em;
+}
+
+@mixin full-height() {
+	width: 100%;
+	height: 100vh;
+}
+
+@mixin display-inline() {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+@mixin display-block() {
+	position: relative;
+	display: block;
+}
+
+@mixin input() {
+	background: none;
+	color: $text-color;
+	margin: 0px auto;
+	padding: 10px 15px;
+	font-size: $input-font-size;
+}
+
+@mixin input-border() {
+	border: 1px solid $text-color;
+}
+
+@mixin input-border-highlight() {
+	border: 1px solid $highlight-color;
+}
+
+@mixin select() {
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  width: 100%;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: $input-font-size;
+}
+
+@mixin select-after() {
+	content: '\25BC';
+  position: absolute;
+  top: 4px;
+  right: 0;
+  bottom: 0;
+  padding: 0 5px;
+  background: transparent;
+  pointer-events: none;
+  color: #fff;
+  font-size: 0.75em;
+}
+
+@mixin border-radius() {
+	border-radius: 5px;
+}
+
+@mixin div-container( $margin-top ) {
+	width: 80%;
+	margin: $margin-top auto;
+}
+
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+@mixin transition() {
+	-webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body {
+	@include full-height;
+  margin: 0;
+  padding: 0;
+  background: #000;
+  @include font;
+  @include linear-gradient( 180deg, #333, #111)
+}
+
+#app {
+	position: relative;
+	width: 100%;
+	max-width: 400px;
+	margin: 20px auto;
+	padding: 20px;
+	color: $text-color;
+	@include linear-gradient( 135deg, $background-color, $background-color-light );
+	@include border-radius;
+}
+
+select {
+	@include select;
+	color: $text-color;
+	@include transition;
+}
+
+select:hover {
+	color: $highlight-color;
+}
+
+input {
+	@include display-inline;
+	@include input;
+	@include input-border;
+	@include border-radius;
+}
+
+input:focus {
+	color: $highlight-color;
+	@include input-border-highlight;
+}
+
+.input-field {
+	@include display-block;
+	@include div-container( 5px );
+	text-align: left;
+
+	label {
+		font-size: 0.9em;
+		width: 66%;
+		
+		@include display-inline;
+	}
+
+	input {
+		width: 33%;
+		margin-left: 1%;
+	}
+}
+
+.dial-input-container {
+	@include display-block;
+	@include div-container( 5px );
+	text-align: center;
+
+	span {
+		font-size: 0.9em;
+		@include display-block;
+		text-align: left;
+		width: 100%;
+	}
+
+	div {
+		@include display-inline;
+		width: 24%;
+	}
+
+	label {
+		@include display-block;
+		font-size: 0.7em;
+	}
+
+	select::-ms-expand {
+	  display: none;
+	}
+
+	.select {
+		width: 80%;
+		@include input-border;
+		@include border-radius;
+	}
+
+	.select:after {
+	  @include select-after;
+	}
+
+	.select:hover::after {
+	  color: $highlight-color;
+	}
+	.select:after {
+	  @include transition;
+	}
+
+}
+
+.errMsg {
+	font-size: 0.6em;
+	color: $error-color;
+}
+
+.turnspro-container {
+	@include div-container( 15px );
+
+
+	span{
+		font-size: 0.9em;
+	}
+
+}
+
+.turnsproDisplay {
+	width: auto;
+	margin: 5px auto;
+	padding: 5px 10px 10px;
+	color: $turnspro-color;
+	background: $turnspro-bg;
+	text-align: center;
+	@include border-radius;
+
+	div {
+		@include display-inline;
+		width: auto;
+		padding: 0px 5px;
+	}
+
+	label {
+		font-size: 0.7em;
+	}
+
+	span {
+		@include turnspro-font;
+	}
+}

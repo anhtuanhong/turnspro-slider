@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Turnspro Slider Calculator</title>
+	<script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id='app'></div>
+
+	<script type='text/babel'>
+		function Display (props) {
+			let errorMsg = ' '
+			const distance = props.values.distance === '' ? 0 : parseInt(props.values.distance) 
+			const circumference = ( props.values.diameter === '' ? 0 : parseInt(props.values.diameter ) ) * Math.PI
+
+			const turns = circumference !== 0 ? Math.floor( distance / circumference ) : 0
+
+			errorMsg = turns < 1  && circumference > 0 && distance != '' ? '*Not a Full Rotation, Increase Travel or Decrease Pulley Diameter' : ''
+			errorMsg += turns > 999 ? '*Too Many Turns, Reduce Travel Distance' : ''
+
+			const time = turns !== 0 ? ( parseInt(props.values.tHours) * 60 * 60 + parseInt(props.values.tMinutes) * 60 + parseInt(props.values.tSeconds) ) / turns : 0
+
+			errorMsg += time > 35999 ? '*Time to Large for Each Turn, Reduce Overall Duration' : ''
+
+			const hours = Math.floor( time / 3600 )
+			const minutes = Math.floor( (time - hours * 3600) / 60 )
+			const seconds = Math.floor( (time - hours * 3600 - minutes *60) )
+
+			return (
+				<div className='turnspro-container'>
+					<div className='errMsg'>{errorMsg}</div>
+					<span>Turnspro Settings</span>
+					<div className='turnsproDisplay'>
+						<DisplayValue
+							label={'Turns'}
+							value={ turns }
+						/>
+						<DisplayValue
+							label={'Hours'}
+							value={ hours }
+						/>
+						<DisplayValue
+							label={'Mins'}
+							value={ minutes }
+						/>
+						<DisplayValue
+							label={'Secs'}
+							value={ seconds }
+						/>
+					</div>
+				</div>
+			)
+		}
+
+		function DisplayValue (props) {
+			const name = props.label.toLowerCase()
+			let output = ''
+
+			switch( name ){
+				case 'turns':
+					let temp = props.value === 0 ? '---' : props.value.toString().padStart(3, ' ')
+					output = temp.substring(temp.length - 3)
+					break
+				case 'hours':
+					output = props.value === 0	? '0' : props.value.toString().substring(props.value.length - 1)
+					break
+				default:
+					output = props.value === 0 ? '00' : props.value.toString().substring(props.value.length - 2).padStart(2, '0')
+			}
+
+			return(
+				<div className={name}>
+					<label>{props.label}</label><br />
+					<span>
+						{output}
+					</span>
+				</div>
+			)
+		}
+
+		class Input extends React.Component {
+			onChange = (e) => {
+				const {onChange, name} = this.props;
+				if (onChange) {
+					onChange(name, e.currentTarget.value)
+				}
+			}
+
+			render(){
+				const { label, name, value  } = this.props
+
+				return (
+					<div className='input-field'>
+						<label>{label}</label>
+						<input
+							type='text'
+							name={name}
+							value={value}
+							placeholder={0}
+							onChange={this.onChange}
+						/>
+					</div>
+				)
+			}
+		}
+
+		class DialInputs extends React.Component {
+			
+
+		  onChange = (name, value) => {
+		  	const {onChange} = this.props;
+		  	if(onChange) {
+		  		onChange(name, value)
+		  	}
+		  }
+
+		  render() {
+		  	const { tHours, tMinutes, tSeconds } = this.props
+		  	const numberRange = Array.from(Array(10).keys()),
+		  	minutesRange = Array.from(Array(60).keys())
+
+		  	return(
+			  	<div className='dial-input-container'>  
+			  		<span>Duration</span>
+			  		<DialInput
+			  			label='Hours'
+			  			name={'tHours'}
+			  			value={tHours}
+			  			options={numberRange}
+			  			onChange={this.onChange}
+			  		/>
+			  		<DialInput
+			  			label='Minutes'
+			  			name={'tMinutes'}
+			  			value={tMinutes}
+			  			options={minutesRange}
+			  			onChange={this.onChange}
+			  		/>
+			  		<DialInput
+			  			label='Seconds'
+			  			name={'tSeconds'}
+			  			value={tSeconds}
+			  			options={minutesRange}
+			  			onChange={this.onChange}
+			  		/>
+			  	</div>
+			  )
+		  }
+		}
+
+		class DialInput extends React.Component {
+			onChange = (e) => {
+				const {onChange} = this.props;
+				if(onChange) {
+					onChange( e.currentTarget.name, e.currentTarget.value)
+				}
+			}
+
+			render(){
+				const { label, name, value, options } = this.props
+
+				return(
+					<div className='dial-input'>
+						<label>{label}</label>
+						<div className='select'>
+							<select
+								name={name}
+								value={value}
+								onChange={this.onChange}
+							>
+								{options.map( o => <option key={o}>{o}</option>)}
+							</select>
+						</div>
+					</div>
+				)
+			}
+		}
+
+		class Calculator extends React.Component {
+			state = {
+		  	diameter: '',
+		  	distance: '',
+		  	tHours: '0',
+		  	tMinutes: '0',
+		  	tSeconds: '0',
+		  }
+
+			handleChange = (name: string, value: string ) => {
+				this.setState( {[name]: value})
+			}
+
+			render() {
+				const { diameter, distance, tHours, tMinutes, tSeconds } = this.state
+
+				return (
+					<div>
+
+						<Input 
+							label='Pulley Diameter'
+							name={ 'diameter' }
+							placeholder='0'
+							value={ diameter }
+							onChange={this.handleChange}
+						/>
+						<Input 
+							label='Travel Distance'
+							name={ 'distance' }
+							placeholder='0'
+							value={distance}
+							onChange={this.handleChange}
+						/>
+						<DialInputs
+							tHours={tHours}
+							tMinutes={tMinutes}
+							tSeconds={tSeconds}
+							onChange={this.handleChange}
+						/>
+						<Display 
+							values={this.state}
+						/>
+					</div>
+				)
+			}
+		}
+
+		
+		class App extends React.Component {
+
+			render() {
+				return (
+					<div>
+						<Calculator />
+					</div>
+				)
+			}
+		}
+
+		ReactDOM.render(
+			<App/>,
+			document.getElementById('app')
+		)
+	</script>
+</body>
+</html>
