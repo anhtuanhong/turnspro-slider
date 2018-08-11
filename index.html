@@ -13,8 +13,8 @@
 	<script type='text/babel'>
 		function Display (props) {
 			let errorMsg = ' '
-			const distance = props.values.distance === '' ? 0 : parseInt(props.values.distance) 
-			const circumference = ( props.values.diameter === '' ? 0 : parseInt(props.values.diameter ) ) * Math.PI
+			const distance = props.values.distance === '' ? 0 : parseFloat(props.values.distance) 
+			const circumference = ( props.values.diameter === '' ? 0 : parseFloat(props.values.diameter ) ) * Math.PI
 
 			const turns = circumference !== 0 ? Math.floor( distance / circumference ) : 0
 
